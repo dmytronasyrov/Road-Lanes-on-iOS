@@ -30,9 +30,11 @@ using namespace cv;
 + (Mat)_gamma:(Mat)source value:(double)value;
 + (Mat)_threshold:(Mat)source min:(int)min max:(int)max;
 + (Mat)_canny:(Mat)source min:(int)min scale:(int)scale;
-+ (vector<Vec4i>)_houghLines:(Mat)source;
++ (vector<Vec4i>)_houghLines:(Mat)source rho:(int)rho threshold:(int)threshold minLength:(int)minLength gapMaxLength:(int)gapMaxLength;
 + (tuple<Vec4i, Vec4i>)_lanesFilter:(vector<Vec4i>)lines left:(int)left right:(int)right;
 + (Mat)_drawLanes:(tuple<Vec4i, Vec4i>)lanes size:(cv::Size)size;
++ (Mat)_revertROI:(Mat)source croppedMat:(Mat)croppedMat marginTop:(int)marginTop marginBottom:(int)marginBottom topHalfWidth:(int)topHalfWidth bottomHalfWidth:(int)bottomHalfWidth;
++ (Mat)_overlay:(Mat)sourceA sourceB:(Mat)sourceB;
 + (Mat)_matFrom:(UIImage *)source;
 + (UIImage *)_imageFrom:(Mat)source;
 
@@ -57,7 +59,7 @@ using namespace cv;
     imageOut = [CVWrapper _gamma:imageOut value:0.5];
     imageOut = [CVWrapper _threshold:imageOut min:100 max:255];
     imageOut = [CVWrapper _canny:imageOut min:100 scale:1.3];
-    vector<Vec4i> lines = [CVWrapper _houghLines:imageOut];
+    vector<Vec4i> lines = [CVWrapper _houghLines:imageOut rho:2 threshold:50 minLength:10 gapMaxLength:200];
     tuple<Vec4i, Vec4i> lanes = [CVWrapper _lanesFilter:lines left:25 right:50];
     imageOut = [CVWrapper _drawLanes:lanes size:imageOut.size()];
     imageOut = [CVWrapper _revertROI:image croppedMat:imageOut marginTop:320 marginBottom:50 topHalfWidth:50 bottomHalfWidth:400];
@@ -67,23 +69,6 @@ using namespace cv;
 }
 
 #pragma mark Private
-
-+ (Mat)_revertROI:(Mat)source croppedMat:(Mat)croppedMat marginTop:(int)marginTop marginBottom:(int)marginBottom topHalfWidth:(int)topHalfWidth bottomHalfWidth:(int)bottomHalfWidth {
-    cout << "-> revertROI ->";
-    
-    int width = source.cols;
-    int height = source.rows;
-    int centerX = floor(width / 2.0);
-    
-    cv::Point P1(centerX - topHalfWidth, marginTop); // from top left clock wise
-    cv::Point P4(centerX - bottomHalfWidth, height - marginBottom);
-    int roiX = (P1.x < P4.x ? P1.x : P4.x);
-    
-    Mat result = Mat::zeros(source.size(), CV_8UC3);
-    croppedMat.copyTo(result(cv::Rect(roiX, P1.y, croppedMat.cols, croppedMat.rows)));
-    
-    return result;
-}
 
 + (Mat)_polycut:(Mat)source marginTop:(int)marginTop marginBottom:(int)marginBottom topHalfWidth:(int)topHalfWidth bottomHalfWidth:(int)bottomHalfWidth {
     cout << "-> polycut ->";
@@ -170,11 +155,11 @@ using namespace cv;
     return result;
 }
 
-+ (vector<Vec4i>)_houghLines:(Mat)source {
++ (vector<Vec4i>)_houghLines:(Mat)source rho:(int)rho threshold:(int)threshold minLength:(int)minLength gapMaxLength:(int)gapMaxLength {
     cout << "-> houghLines ->";
 
     vector<Vec4i> lines;
-    HoughLinesP(source, lines, 2, CV_PI / 180.0, 50, 10, 200);
+    HoughLinesP(source, lines, rho, CV_PI / 180.0, threshold, minLength, gapMaxLength);
     
     return lines;
 }
@@ -222,6 +207,23 @@ using namespace cv;
     std::tie(leftLane, rightLane) = lanes;
     cv::line(result, cv::Point(leftLane[0], leftLane[1]), cv::Point(leftLane[2], leftLane[3]), leftColor, lineWidth, CV_AA);
     cv::line(result, cv::Point(rightLane[0], rightLane[1]), cv::Point(rightLane[2], rightLane[3]), rightColor, lineWidth, CV_AA);
+    
+    return result;
+}
+
++ (Mat)_revertROI:(Mat)source croppedMat:(Mat)croppedMat marginTop:(int)marginTop marginBottom:(int)marginBottom topHalfWidth:(int)topHalfWidth bottomHalfWidth:(int)bottomHalfWidth {
+    cout << "-> revertROI ->";
+    
+    int width = source.cols;
+    int height = source.rows;
+    int centerX = floor(width / 2.0);
+    
+    cv::Point P1(centerX - topHalfWidth, marginTop); // from top left clock wise
+    cv::Point P4(centerX - bottomHalfWidth, height - marginBottom);
+    int roiX = (P1.x < P4.x ? P1.x : P4.x);
+    
+    Mat result = Mat::zeros(source.size(), CV_8UC3);
+    croppedMat.copyTo(result(cv::Rect(roiX, P1.y, croppedMat.cols, croppedMat.rows)));
     
     return result;
 }

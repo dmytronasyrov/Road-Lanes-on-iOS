@@ -20,8 +20,6 @@ public final class AppDelegate: UIResponder, UIApplicationDelegate {
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.rootViewController = ImageController()
-//        window!.rootViewController = CameraController()
-//        window!.rootViewController = CVCameraController()
         window!.makeKeyAndVisible()
         
         return true
