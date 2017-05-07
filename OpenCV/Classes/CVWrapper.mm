@@ -183,15 +183,26 @@ using namespace cv;
             rightLines.push_back(l);
     }
     
-    std::sort(leftLines.begin(), leftLines.end(), [](const cv::Vec4i &a, const cv::Vec4i &b) {
+    std::sort(leftLines.begin(), leftLines.end(), [](const Vec4i &a, const Vec4i &b) {
         return euclidDistSqr(a) > euclidDistSqr(b);
     });
     
-    std::sort(rightLines.begin(), rightLines.end(), [](const cv::Vec4i &a, const cv::Vec4i &b) {
+    std::sort(rightLines.begin(), rightLines.end(), [](const Vec4i &a, const Vec4i &b) {
         return euclidDistSqr(a) > euclidDistSqr(b);
     });
     
     return tuple<Vec4i, Vec4i>(leftLines.front(), rightLines.front());
+}
+
++ (Mat)_drawLines:(vector<Vec4i>)lines size:(cv::Size)size {
+    Mat result = Mat::zeros(size, CV_8UC3);
+    
+    for(size_t i = 0; i < lines.size(); i++) {
+        Vec4i l = lines[i];
+        cv::line(result, cv::Point(l[0], l[1]), cv::Point(l[2], l[3]), Scalar(255, 0, 0), 2, CV_AA);
+    }
+    
+    return result;
 }
 
 + (Mat)_drawLanes:(tuple<Vec4i, Vec4i>)lanes size:(cv::Size)size {
