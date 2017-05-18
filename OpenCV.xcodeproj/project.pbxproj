@@ -15,6 +15,12 @@
 		17769B021EB69C15004C3F13 /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17769B011EB69C15004C3F13 /* ImageController.swift */; };
 		17769B0A1EB69CA8004C3F13 /* CVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17769B091EB69CA8004C3F13 /* CVWrapper.mm */; };
 		17769B0D1EB69EDD004C3F13 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17769B0C1EB69EDD004C3F13 /* opencv2.framework */; };
+		17DF1EB51EC36574009101CF /* solidWhiteRight.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 17DF1EB01EC36574009101CF /* solidWhiteRight.jpg */; };
+		17DF1EB61EC36574009101CF /* solidYellowCurve.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 17DF1EB11EC36574009101CF /* solidYellowCurve.jpg */; };
+		17DF1EB71EC36574009101CF /* solidYellowCurve2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 17DF1EB21EC36574009101CF /* solidYellowCurve2.jpg */; };
+		17DF1EB81EC36574009101CF /* solidYellowLeft.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 17DF1EB31EC36574009101CF /* solidYellowLeft.jpg */; };
+		17DF1EB91EC36574009101CF /* whiteCarLaneSwitch.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 17DF1EB41EC36574009101CF /* whiteCarLaneSwitch.jpg */; };
+		17DF1EBB1EC3C1B5009101CF /* IMG_6868.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 17DF1EBA1EC3C1B5009101CF /* IMG_6868.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +36,12 @@
 		17769B091EB69CA8004C3F13 /* CVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVWrapper.mm; sourceTree = "<group>"; };
 		17769B0C1EB69EDD004C3F13 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		17769B0E1EB6A29E004C3F13 /* OpenCV-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenCV-Bridging-Header.h"; sourceTree = "<group>"; };
+		17DF1EB01EC36574009101CF /* solidWhiteRight.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = solidWhiteRight.jpg; sourceTree = "<group>"; };
+		17DF1EB11EC36574009101CF /* solidYellowCurve.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = solidYellowCurve.jpg; sourceTree = "<group>"; };
+		17DF1EB21EC36574009101CF /* solidYellowCurve2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = solidYellowCurve2.jpg; sourceTree = "<group>"; };
+		17DF1EB31EC36574009101CF /* solidYellowLeft.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = solidYellowLeft.jpg; sourceTree = "<group>"; };
+		17DF1EB41EC36574009101CF /* whiteCarLaneSwitch.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = whiteCarLaneSwitch.jpg; sourceTree = "<group>"; };
+		17DF1EBA1EC3C1B5009101CF /* IMG_6868.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_6868.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +110,13 @@
 		17769B001EB69C01004C3F13 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				17DF1EB01EC36574009101CF /* solidWhiteRight.jpg */,
+				17DF1EB11EC36574009101CF /* solidYellowCurve.jpg */,
+				17DF1EB21EC36574009101CF /* solidYellowCurve2.jpg */,
+				17DF1EB31EC36574009101CF /* solidYellowLeft.jpg */,
+				17DF1EB41EC36574009101CF /* whiteCarLaneSwitch.jpg */,
 				176F63C71EB78E5700E86937 /* solidWhiteCurve.jpg */,
+				17DF1EBA1EC3C1B5009101CF /* IMG_6868.jpg */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -172,9 +190,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17DF1EB71EC36574009101CF /* solidYellowCurve2.jpg in Resources */,
+				17DF1EB51EC36574009101CF /* solidWhiteRight.jpg in Resources */,
 				176F63C81EB78E5700E86937 /* solidWhiteCurve.jpg in Resources */,
 				17769AF81EB69B86004C3F13 /* LaunchScreen.storyboard in Resources */,
+				17DF1EB81EC36574009101CF /* solidYellowLeft.jpg in Resources */,
 				17769AF51EB69B86004C3F13 /* Assets.xcassets in Resources */,
+				17DF1EB91EC36574009101CF /* whiteCarLaneSwitch.jpg in Resources */,
+				17DF1EB61EC36574009101CF /* solidYellowCurve.jpg in Resources */,
+				17DF1EBB1EC3C1B5009101CF /* IMG_6868.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

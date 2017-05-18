@@ -54,14 +54,18 @@ using namespace cv;
     Mat image = [CVWrapper _matFrom:source];
     Mat imageOut = image.clone();
 
-    imageOut = [CVWrapper _polycut:imageOut marginTop:320 marginBottom:50 topHalfWidth:50 bottomHalfWidth: 400];
+    //imageOut = [CVWrapper _polycut:imageOut marginTop:1200 marginBottom:0 topHalfWidth:200 bottomHalfWidth:1800];
+    imageOut = [CVWrapper _polycut:imageOut marginTop:320 marginBottom:50 topHalfWidth:50 bottomHalfWidth:400];
     imageOut = [CVWrapper _rgbToYcr:imageOut];
+    imageOut = [CVWrapper _toR:imageOut];
     imageOut = [CVWrapper _gamma:imageOut value:0.5];
     imageOut = [CVWrapper _threshold:imageOut min:100 max:255];
     imageOut = [CVWrapper _canny:imageOut min:100 scale:1.3];
     vector<Vec4i> lines = [CVWrapper _houghLines:imageOut rho:2 threshold:50 minLength:10 gapMaxLength:200];
+    //imageOut = [CVWrapper _drawLines:lines size:imageOut.size()];
     tuple<Vec4i, Vec4i> lanes = [CVWrapper _lanesFilter:lines left:25 right:50];
     imageOut = [CVWrapper _drawLanes:lanes size:imageOut.size()];
+    //imageOut = [CVWrapper _revertROI:image croppedMat:imageOut marginTop:1200 marginBottom:0 topHalfWidth:200 bottomHalfWidth:1800];
     imageOut = [CVWrapper _revertROI:image croppedMat:imageOut marginTop:320 marginBottom:50 topHalfWidth:50 bottomHalfWidth:400];
     imageOut = [CVWrapper _overlay:image sourceB:imageOut];
 
@@ -117,6 +121,21 @@ using namespace cv;
     
     Mat result;
     cvtColor(source, result, COLOR_BGR2YCrCb);
+    
+    return result;
+}
+
++ (Mat)_toR:(Mat)source {
+    cout << "-> toR ->";
+    
+    vector<Mat> rgbChannels(3);
+    split(source, rgbChannels);
+    
+    Mat result = Mat::zeros(source.size(), CV_8UC1);
+    vector<Mat> channels;
+    
+    channels.push_back(rgbChannels[0]);
+    merge(channels, result);
     
     return result;
 }

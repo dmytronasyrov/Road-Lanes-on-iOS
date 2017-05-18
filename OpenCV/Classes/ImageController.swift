@@ -12,15 +12,27 @@ public final class ImageController: UIViewController {
 
     // MARK: Variables
     
-    lazy var trainingImg = UIImage(named: "solidWhiteCurve.jpg");
-    lazy var resultImgView: UIImageView = {
+    private lazy var resultImgView: UIImageView = {
         let v = UIImageView(frame: .zero)
         v.contentMode = .scaleAspectFit
         v.isOpaque = true
         v.backgroundColor = UIColor.black
+        v.isExclusiveTouch = true
+        v.isMultipleTouchEnabled = false
+        v.isUserInteractionEnabled = true
         
         return v
     }()
+    private lazy var trainingSet = [
+        //"IMG_6868.jpg",
+        "solidWhiteRight.jpg",
+        "solidYellowCurve.jpg",
+        "solidYellowCurve2.jpg",
+        "solidYellowLeft.jpg",
+        "whiteCarLaneSwitch.jpg",
+        "solidWhiteCurve.jpg"
+    ]
+    private var imageIdx = 0
     
     // MARK: Life
     
@@ -43,6 +55,25 @@ public final class ImageController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        resultImgView.image = CVWrapper.lanes(from: trainingImg);
+        loadImage()
+    }
+    
+    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+
+        loadImage()
+    }
+    
+    // MARK: Private
+    
+    private func loadImage() {
+        let file = trainingSet[imageIdx]
+        print("Lading: \(file)")
+        let image = UIImage(named: file)
+        resultImgView.image = CVWrapper.lanes(from: image)
+        
+        imageIdx = imageIdx.advanced(by: 1)
+        guard imageIdx >= trainingSet.count else { return }
+        imageIdx = 0
     }
 }
